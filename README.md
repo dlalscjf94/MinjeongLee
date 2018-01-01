@@ -1,0 +1,2 @@
+# MinjeongLee
+KPU TEAM LMJ 
