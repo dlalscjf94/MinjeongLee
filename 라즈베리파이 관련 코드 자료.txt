@@ -1,0 +1,6 @@
+http://www.rasplay.org/?p=4609 - 파이카메라와 안드로이드 스트리밍
+http://raspi.tv/2013/how-to-stream-video-from-your-raspicam-to-your-nexus-7-tablet-using-vlc - 파이카메라와 안드로이드 스트리밍
+
+https://blog.naver.com/chandong83/221156763486 - 라즈베리파이와 안드로이드 시리얼 통신
+
+https://blog.naver.com/chandong83/221015068625 - 파이썬 폴더내의 파일을 안드로이드로 이동
