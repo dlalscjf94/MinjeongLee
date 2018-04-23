@@ -50,7 +50,7 @@ class VideoCamera(object):
 
     def resizeFrame(self):
         # resize the frame, convert it to grayscale, and blur it
-        self.frame = imutils.resize(self.frame, width=500)
+        self.frame = imutils.resize(self.frame, width=350)
         self.gray = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
         self.gray = cv2.GaussianBlur(self.gray, (21, 21), 0)
 
@@ -98,7 +98,16 @@ class VideoCamera(object):
 
 
     def Camera(self):
+	n = 2
 	while True:
+		if os.path.exists("move.txt"):
+			n = n-1
+			self.firstFrame = None
+			if n == 0:
+                        	self.firstFrame = None
+                        	os.system("rm move.txt")
+                        	time.sleep(1)
+
 		self.getFrame()
 
 		# if the frame could not be grabbed, then we have reached the end

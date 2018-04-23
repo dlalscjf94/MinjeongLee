@@ -21,6 +21,28 @@ import cv2
 import StringIO, numpy
 from PIL import Image
 from connet import Connet
+import RPi.GPIO as GPIO
+
+pan_pwn = 18
+till_pwn = 4
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pan_pwn, GPIO.OUT)
+GPIO.setup(till_pwn, GPIO.OUT)
+
+p = GPIO.PWM(pan_pwn, 15)
+t = GPIO.PWM(till_pwn, 15)
+
+p.start(0)
+t.start(0)
+
+p.ChangeDutyCycle(1.8)
+time.sleep(1)
+p.start(0)
+
+t.ChangeDutyCycle(1.7)
+time.sleep(1)
+t.start(0)
 
 app = Flask(__name__)
 
@@ -60,8 +82,8 @@ def get_image():
     return send_file('capture.jpg', mimetype='image/gif')
 
 def thread():
+    cn = Connet(p,t)
     vc = VideoCamera()
-    cn = Connet()
     t1 = threading.Thread(target=vc.Camera, args=())
     t2 = threading.Thread(target=cn.sock, args=())
     t1.daemon = True
@@ -70,7 +92,7 @@ def thread():
     t2.start()
 
 def run():
-    app.run(host = '0.0.0.0', debug = True)
+    app.run(host = '0.0.0.0', debug = False)
 
 if __name__ == '__main__':
     #vc = VideoCamera()

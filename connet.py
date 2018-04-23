@@ -1,20 +1,27 @@
 #-*- coding: utf-8 -*-
 import socket
 import os
+from control import control
 
 class Connet:
 #파이 컨트롤 함수
+	def __init__(self,p,t):
+		self.contl = control(p,t)
 	def motor(self,input_string):
         	#라즈베리파이를 컨트롤할 명령어 설정
         	if input_string == "up":
                 	print("위 입니다.")
+			self.contl.up()
                		#파이 동작 명령 추가할것
         	elif input_string == "down":
                 	print("아래 입니다.")
+			self.contl.down()
         	elif input_string == "left":
                 	print("왼쪽 입니다.")
+			self.contl.left()
         	elif input_string == "right":
                 	print("오른쪽 입니다.")
+			self.contl.right()
 
 	def connection(self,input_string):
 		if input_string == "start":
