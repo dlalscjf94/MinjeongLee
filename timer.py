@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 import datetime
+import os
 
 class TimeRecord:
 	def __init__(self):
@@ -9,7 +10,7 @@ class TimeRecord:
 		self.record = False
 
 	def Record(self, sense):
-		if self.start == True and sense == True:
+		if self.start == True and sense == True and os.path.exists("move.txt") == False:
 			self.record = True
 			firstTime = datetime.datetime.now()
 			print("현재 시간을 기록합니다.")

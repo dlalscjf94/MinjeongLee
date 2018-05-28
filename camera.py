@@ -8,6 +8,9 @@ import cv2
 import threading
 import os
 from timer import TimeRecord
+from push import push
+import coolsms
+from example_utf8_sendsms  import sendsms
 
 class VideoCamera(object):
     def __init__(self):
@@ -24,6 +27,7 @@ class VideoCamera(object):
 	self.frameDelta = None
 	self.thresh = None
 	self.timer = TimeRecord()
+	self.pushAL = push()
 
 	# if the video argument is None, then we are reading from webcam
 	if self.args.get("video", None) is None:
@@ -46,7 +50,8 @@ class VideoCamera(object):
         # text
         (self.grabbed, self.frame) = self.camera.read()
         self.frame = cv2.flip(self.frame,0)
-        self.text = "Unoccupied"
+	self.frame = cv2.flip(self.frame,1)
+        self.text = ""
 
     def resizeFrame(self):
         # resize the frame, convert it to grayscale, and blur it
@@ -83,30 +88,29 @@ class VideoCamera(object):
 		# and update the text
 		(x, y, w, h) = cv2.boundingRect(c)
 		cv2.rectangle(self.frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-		self.text = "Occupied"
+		self.text = "Something sensering now"
 
 		sense = True
 
 	if self.timer.Record(sense) == True:
 		print("이미지를 캡처합니다.")
 		cv2.imwrite("capture.jpg", self.frame)
+		self.pushAL.alarm()
+		sendsms()
 
     def putText(self):
 	# draw the text and timestamp on the frame
-        cv2.putText(self.frame, "Room Status: {}".format(self.text), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+        cv2.putText(self.frame, "{}".format(self.text), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         cv2.putText(self.frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"), (10, self.frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
 
     def Camera(self):
-	n = 2
 	while True:
-		if os.path.exists("move.txt"):
-			n = n-1
+		if os.path.exists("move2.txt"):
 			self.firstFrame = None
-			if n == 0:
-                        	self.firstFrame = None
-                        	os.system("rm move.txt")
-                        	time.sleep(1)
+			os.system("rm move.txt")
+			os.system("rm move2.txt")
+			continue
 
 		self.getFrame()
 
@@ -122,7 +126,8 @@ class VideoCamera(object):
 			self.firstFrame = self.gray
 			continue
 
-		self.motion()
+		if os.path.exists("move.txt")==False:
+			self.motion()
 
 		cv2.imwrite("output.jpg",self.frame)
 

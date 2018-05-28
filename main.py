@@ -20,7 +20,7 @@ import threading
 import cv2
 import StringIO, numpy
 from PIL import Image
-from connet import Connet
+from connect import Connect
 import RPi.GPIO as GPIO
 
 pan_pwn = 18
@@ -82,7 +82,7 @@ def get_image():
     return send_file('capture.jpg', mimetype='image/gif')
 
 def thread():
-    cn = Connet(p,t)
+    cn = Connect(p,t)
     vc = VideoCamera()
     t1 = threading.Thread(target=vc.Camera, args=())
     t2 = threading.Thread(target=cn.sock, args=())

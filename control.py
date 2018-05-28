@@ -29,38 +29,53 @@ class control:
 		self.p.start(0)
 		self.t.start(0)
 
-	def default(self):
+	def mv(self):
+		os.system("touch move.txt")
+		time.sleep(0.4)
+		os.system("touch move2.txt")
+
+	def center(self):
+		os.system("touch move.txt")
 		self.p.ChangeDutyCycle(self.pan_default)
-		time.sleep(1)
+		time.sleep(0.6)
 		self.p.start(0)
 		self.t.ChangeDutyCycle(self.till_default)
-		time.sleep(1)
+		time.sleep(0.6)
 		self.t.start(0)
+		#os.system("touch move.txt")
+		time.sleep(0.7)
+		os.system("touch move2.txt")
+		self.pan_move = self.pan_default
+		self.till_move = self.till_default
 
 	def up(self):
+		os.system("touch move.txt")
 		self.till_move = self.till_move - self.move
 		self.t.ChangeDutyCycle(self.till_move)
 		time.sleep(0.5)
 		self.t.start(0)
-		os.system("touch move.txt")
+		self.mv()
 
 	def down(self):
+		os.system("touch move.txt")
 		self.till_move = self.till_move + self.move
 		self.t.ChangeDutyCycle(self.till_move)
 		time.sleep(0.5)
 		self.t.start(0)
-		os.system("touch move.txt")
+		self.mv()
 
 	def left(self):
+		os.system("touch move.txt")
 		self.pan_move = self.pan_move + self.move
 		self.p.ChangeDutyCycle(self.pan_move)
 		time.sleep(0.3)
 		self.p.start(0)
-		os.system("touch move.txt")
+		self.mv()
 
 	def right(self):
+		os.system("touch move.txt")
 		self.pan_move = self.pan_move - self.move
 		self.p.ChangeDutyCycle(self.pan_move)
 		time.sleep(0.3)
 		self.p.start(0)
-		os.system("touch move.txt")
+		self.mv()
