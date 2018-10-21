@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "115439621318",
+    "firebase_url": "https://fcmpush-584cc.firebaseio.com",
+    "project_id": "fcmpush-584cc",
+    "storage_bucket": "fcmpush-584cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115439621318:android:7c04446b700c2abb",
+        "android_client_info": {
+          "package_name": "org.techtown.homecctv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115439621318-p7rhsatlqg7v2h1ivv521qterqbi65ce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyHcRtuC39U-PZa3qxSx5vEHrharbsW2A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

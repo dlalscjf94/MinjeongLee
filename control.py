@@ -1,4 +1,3 @@
-#import RPi.GPIO as GPIO
 import time
 import os
 
@@ -11,17 +10,6 @@ class control:
 		self.pan_move = self.pan_default
 		self.till_move = self.till_default
 		self.move = 0.2
-		#GPIO.setmode(GPIO.BCM)
-		#GPIO.setup(self.pan_pwn, GPIO.OUT)
-		#GPIO.setup(self.till_pwn, GPIO.OUT)
-
-		#self.p = GPIO.PWM(self.pan_pwn, 30)
-		#self.t = GPIO.PWM(self.till_pwn, 30)
-
-		#self.p.start(0)
-		#self.t.start(0)
-
-		#self.default()
 
 		self.p = p
 		self.t = t
@@ -42,40 +30,43 @@ class control:
 		self.t.ChangeDutyCycle(self.till_default)
 		time.sleep(0.6)
 		self.t.start(0)
-		#os.system("touch move.txt")
 		time.sleep(0.7)
 		os.system("touch move2.txt")
 		self.pan_move = self.pan_default
 		self.till_move = self.till_default
 
 	def up(self):
-		os.system("touch move.txt")
-		self.till_move = self.till_move - self.move
-		self.t.ChangeDutyCycle(self.till_move)
-		time.sleep(0.5)
-		self.t.start(0)
-		self.mv()
+		if (self.till_move > 0.8):
+			os.system("touch move.txt")
+			self.till_move = self.till_move - self.move
+			self.t.ChangeDutyCycle(self.till_move)
+			time.sleep(0.5)
+			self.t.start(0)
+			self.mv()
 
 	def down(self):
-		os.system("touch move.txt")
-		self.till_move = self.till_move + self.move
-		self.t.ChangeDutyCycle(self.till_move)
-		time.sleep(0.5)
-		self.t.start(0)
-		self.mv()
+		if (self.till_move < 2.3):
+			os.system("touch move.txt")
+			self.till_move = self.till_move + self.move
+			self.t.ChangeDutyCycle(self.till_move)
+			time.sleep(0.5)
+			self.t.start(0)
+			self.mv()
 
 	def left(self):
-		os.system("touch move.txt")
-		self.pan_move = self.pan_move + self.move
-		self.p.ChangeDutyCycle(self.pan_move)
-		time.sleep(0.3)
-		self.p.start(0)
-		self.mv()
+		if (self.pan_move < 2.9):
+			os.system("touch move.txt")
+			self.pan_move = self.pan_move + self.move
+			self.p.ChangeDutyCycle(self.pan_move)
+			time.sleep(0.3)
+			self.p.start(0)
+			self.mv()
 
 	def right(self):
-		os.system("touch move.txt")
-		self.pan_move = self.pan_move - self.move
-		self.p.ChangeDutyCycle(self.pan_move)
-		time.sleep(0.3)
-		self.p.start(0)
-		self.mv()
+		if (self.pan_move > 0.9):
+			os.system("touch move.txt")
+			self.pan_move = self.pan_move - self.move
+			self.p.ChangeDutyCycle(self.pan_move)
+			time.sleep(0.3)
+			self.p.start(0)
+			self.mv()
